@@ -1,0 +1,4 @@
+### Changes will apply automatically. ###
+#-------------------------------
+[ZBOOSTER]
+LauncherPoints = 7

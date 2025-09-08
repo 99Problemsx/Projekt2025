@@ -1,0 +1,8 @@
+﻿[REPELCHARM]
+Name = Repel Charm
+NamePlural = Repel Charms
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A mystical charm that repels wild Pokémon when activated. Can be toggled on and off.

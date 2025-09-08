@@ -1,0 +1,4 @@
+Name       = Dynamic Overworld Shadows
+Version    = 1.0
+Essentials = 21.1
+Credits    = Marin, Golisopod User, Wolf PP, Zik 

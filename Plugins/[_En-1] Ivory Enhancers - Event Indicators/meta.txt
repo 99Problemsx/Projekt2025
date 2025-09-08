@@ -1,0 +1,5 @@
+Name       = Ivory Plugin Enhancer for TDW Event Indicators
+Version    = 2.1
+Requires   = Event Indicators
+Essentials = 21.1
+Credits    = Ivory, wrigty12, Luka S.J.

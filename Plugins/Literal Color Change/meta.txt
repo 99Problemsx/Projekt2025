@@ -1,0 +1,4 @@
+Name         = Literal Color Change
+Version      = 1.0
+Credits      = Ghasty_001
+Essentials   = 21.1

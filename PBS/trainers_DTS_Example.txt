@@ -1,0 +1,17 @@
+﻿# Can be safely deleted, just for example purposes
+#-------------------------------
+[POKEMONTRAINER_Red,Red,100]
+LoseText = ...
+Pokemon = VENUSAUR,50
+#-------------------------------
+[POKEMONTRAINER_Leaf,Leaf,100]
+LoseText = ...
+Pokemon = BLASTOISE,50
+#-------------------------------
+[RIVAL1,Blue Oak,100]
+LoseText = ...
+Pokemon = CHARIZARD,50
+#-------------------------------
+[LEADER_Giovanni,Giovanni,100]
+LoseText = ...
+Pokemon = NIDOKING,50

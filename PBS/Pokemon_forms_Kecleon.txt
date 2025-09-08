@@ -1,0 +1,36 @@
+#-------------------------------
+[KECLEON,1]
+FormName = Red Form
+Color = Red
+#-------------------------------
+[KECLEON,2]
+FormName = Blue Form
+Color = Blue
+#-------------------------------
+[KECLEON,3]
+FormName = Yellow Form
+Color = Yellow
+#-------------------------------
+[KECLEON,4]
+FormName = White Form
+Color = White
+#-------------------------------
+[KECLEON,5]
+FormName = Pink Form
+Color = Pink
+#-------------------------------
+[KECLEON,6]
+FormName = Purple Form
+Color = Purple
+#-------------------------------
+[KECLEON,7]
+FormName = Brown Form
+Color = Brown
+#-------------------------------
+[KECLEON,8]
+FormName = Black Form
+Color = Black
+#-------------------------------
+[KECLEON,9]
+FormName = Gray Form
+Color = Gray

@@ -1,0 +1,469 @@
+module Settings
+
+#-------------------------------------------------------------
+    # My Created Event Indicators
+    
+    # Keep this file if you want to use the indicators I included
+#-------------------------------------------------------------
+
+_path = "Graphics/UI/Event Indicators/"
+
+    EVENT_INDICATORS = {
+
+    "battleShortest" => {
+        :graphic => _path + "battle_available",
+        :always_visible => true,
+        :y_adjustment => 0
+    },
+    "battleShorter" => {
+        :graphic => _path + "battle_available",
+        :always_visible => true,
+    :y_adjustment => 5
+    },
+    "battleShort" => {
+        :graphic => _path + "battle_available",
+        :always_visible => true,
+        :y_adjustment => -8
+    },
+    "battle" => {
+        :graphic => _path + "battle_available",
+        :always_visible => true,
+        :y_adjustment => -16
+    },
+    "battleTall" => {
+        :graphic => _path + "battle_available",
+        :always_visible => true,
+        :y_adjustment => -20
+    },
+    "battleTaller" => {
+        :graphic => _path + "battle_available",
+        :always_visible => true,
+        :y_adjustment => -24
+    },
+    "battleTallest" => {
+        :graphic => _path + "battle_available",
+        :always_visible => true,
+        :y_adjustment => -28
+    },
+
+#------------------------------------------------------------------------------------
+
+    "bookShortest" => {
+        :graphic => _path + "basic_book",
+        :always_visible => true,
+        :y_adjustment => 0
+    },
+    "bookShorter" => {
+        :graphic => _path + "basic_book",
+        :always_visible => true,
+        :y_adjustment => 5
+    },
+    "bookShort" => {
+        :graphic => _path + "basic_book",
+        :always_visible => true,
+        :y_adjustment => -8
+    },
+    "book" => {
+        :graphic => _path + "basic_book",
+        :always_visible => true,
+        :y_adjustment => -16
+    },
+    "bookTall" => {
+        :graphic => _path + "basic_book",
+        :always_visible => true,
+        :y_adjustment => -20
+    },
+    "bookTaller" => {
+        :graphic => _path + "basic_book",
+        :always_visible => true,
+        :y_adjustment => -24
+    },
+    "bookTallest" => {
+        :graphic => _path + "basic_book",
+        :always_visible => true,
+        :y_adjustment => -28
+    },
+
+#------------------------------------------------------------------------------------
+
+    "dottedShortest" => {
+        :graphic => _path + "unsure_dots",
+        :always_visible => true,
+        :y_adjustment => 0
+    },
+    "dottedShorter" => {
+        :graphic => _path + "unsure_dots",
+        :always_visible => true,
+        :y_adjustment => 5
+    },
+    "dottedShort" => {
+        :graphic => _path + "unsure_dots",
+        :always_visible => true,
+        :y_adjustment => -8
+    },
+    "dotted" => {
+        :graphic => _path + "unsure_dots",
+        :always_visible => true,
+        :y_adjustment => -16
+    },
+    "dottedTall" => {
+        :graphic => _path + "unsure_dots",
+        :always_visible => true,
+        :y_adjustment => -20
+    },
+    "dottedTaller" => {
+        :graphic => _path + "unsure_dots",
+        :always_visible => true,
+        :y_adjustment => -24
+    },
+    "dottedTallest" => {
+        :graphic => _path + "unsure_dots",
+        :always_visible => true,
+        :y_adjustment => -28
+    },
+
+#------------------------------------------------------------------------------------
+
+    "eggsShortest" => {
+        :graphic => _path + "daycare_egg",
+        :always_visible => true,
+        :y_adjustment => 0
+    },
+    "eggsShorter" => {
+        :graphic => _path + "daycare_egg",
+        :always_visible => true,
+        :y_adjustment => 5
+    },
+    "eggsShort" => {
+        :graphic => _path + "daycare_egg",
+        :always_visible => true,
+        :y_adjustment => -8
+    },
+    "eggs" => {
+        :graphic => _path + "daycare_egg",
+        :always_visible => true,
+        :y_adjustment => -16
+    },
+    "eggsTall" => {
+        :graphic => _path + "daycare_egg",
+        :always_visible => true,
+        :y_adjustment => -20
+    },
+    "eggsTaller" => {
+        :graphic => _path + "daycare_egg",
+        :always_visible => true,
+        :y_adjustment => -24
+    },
+    "eggsTallest" => {
+        :graphic => _path + "daycare_egg",
+        :always_visible => true,
+        :y_adjustment => -28
+    },
+
+#------------------------------------------------------------------------------------
+
+    "moneyShortest" => {
+        :graphic => _path + "Money_Pokedollar",
+        :always_visible => true,
+        :y_adjustment => 0
+    },
+    "moneyShorter" => {
+        :graphic => _path + "Money_Pokedollar",
+        :always_visible => true,
+        :y_adjustment => 5
+    },
+    "moneyShort" => {
+        :graphic => _path + "Money_Pokedollar",
+        :always_visible => true,
+        :y_adjustment => -8
+    },
+    "money" => {
+        :graphic => _path + "Money_Pokedollar",
+        :always_visible => true,
+        :y_adjustment => -16
+    },
+    "moneyTall" => {
+        :graphic => _path + "Money_Pokedollar",
+        :always_visible => true,
+        :y_adjustment => -20
+    },
+    "moneyTaller" => {
+        :graphic => _path + "Money_Pokedollar",
+        :always_visible => true,
+        :y_adjustment => -24
+    },
+    "moneyTallest" => {
+        :graphic => _path + "Money_Pokedollar",
+        :always_visible => true,
+        :y_adjustment => -28
+    },
+
+#------------------------------------------------------------------------------------
+
+    "musicShortest" => {
+        :graphic => _path + "musical_note",
+        :always_visible => true,
+        :y_adjustment => 0
+    },
+    "musicShorter" => {
+        :graphic => _path + "musical_note",
+        :always_visible => true,
+    :y_adjustment => 5
+    },
+    "musicShort" => {
+        :graphic => _path + "musical_note",
+        :always_visible => true,
+        :y_adjustment => -8
+    },
+    "music" => {
+        :graphic => _path + "musical_note",
+        :always_visible => true,
+        :y_adjustment => -16
+    },
+    "musicTall" => {
+        :graphic => _path + "musical_note",
+        :always_visible => true,
+        :y_adjustment => -20
+    },
+    "musicTaller" => {
+        :graphic => _path + "musical_note",
+        :always_visible => true,
+        :y_adjustment => -24
+    },
+    "musicTallest" => {
+        :graphic => _path + "musical_note",
+        :always_visible => true,
+        :y_adjustment => -28
+    },
+
+#------------------------------------------------------------------------------------
+
+
+    "pikaShortest" => {
+        :graphic => _path + "pika_surprise",
+        :always_visible => true,
+        :y_adjustment => 0
+    },
+    "pikaShorter" => {
+        :graphic => _path + "pika_surprise",
+        :always_visible => true,
+    :y_adjustment => 5
+    },
+    "pikaShort" => {
+        :graphic => _path + "pika_surprise",
+        :always_visible => true,
+        :y_adjustment => -8
+    },
+    "pika" => {
+        :graphic => _path + "pika_surprise",
+        :always_visible => true,
+        :y_adjustment => -16
+    },
+    "pikaTall" => {
+        :graphic => _path + "pika_surprise",
+        :always_visible => true,
+        :y_adjustment => -20
+    },
+    "pikaTaller" => {
+        :graphic => _path + "pika_surprise",
+        :always_visible => true,
+        :y_adjustment => -24
+    },
+    "pikaTallest" => {
+        :graphic => _path + "pika_surprise",
+        :always_visible => true,
+        :y_adjustment => -28
+    },
+
+#------------------------------------------------------------------------------------
+
+    "puzzleShortest" => {
+        :graphic => _path + "puzzle_pieces",
+        :always_visible => true,
+        :y_adjustment => 0
+    },
+    "puzzleShorter" => {
+        :graphic => _path + "puzzle_pieces",
+        :always_visible => true,
+        :y_adjustment => 5
+    },
+    "puzzleShort" => {
+        :graphic => _path + "puzzle_pieces",
+        :always_visible => true,
+        :y_adjustment => -8
+    },
+    "puzzle" => {
+        :graphic => _path + "puzzle_pieces",
+        :always_visible => true,
+        :y_adjustment => -16
+    },
+    "puzzleTall" => {
+        :graphic => _path + "puzzle_pieces",
+        :always_visible => true,
+        :y_adjustment => -20
+    },
+    "puzzleTaller" => {
+        :graphic => _path + "puzzle_pieces",
+        :always_visible => true,
+        :y_adjustment => -24
+    },
+    "puzzleTallest" => {
+        :graphic => _path + "puzzle_pieces",
+        :always_visible => true,
+        :y_adjustment => -28
+    },
+
+#------------------------------------------------------------------------------------
+
+    "questShortest" => {
+        :graphic => _path + "quest_available",
+        :always_visible => true,
+        :y_adjustment => 0
+    },
+    "questShorter" => {
+        :graphic => _path + "quest_available",
+        :always_visible => true,
+    :y_adjustment => 5
+    },
+    "questShort" => {
+        :graphic => _path + "quest_available",
+        :always_visible => true,
+        :y_adjustment => -8
+    },
+    "quest" => {
+        :graphic => _path + "quest_available",
+        :always_visible => true,
+        :y_adjustment => -16
+    },
+    "questTall" => {
+        :graphic => _path + "quest_available",
+        :always_visible => true,
+        :y_adjustment => -20
+    },
+    "questTaller" => {
+        :graphic => _path + "quest_available",
+        :always_visible => true,
+        :y_adjustment => -24
+    },
+    "questTallest" => {
+        :graphic => _path + "quest_available",
+        :always_visible => true,
+        :y_adjustment => -28
+    },
+
+#------------------------------------------------------------------------------------
+
+    "questionShortest" => {
+        :graphic => _path + "event_question",
+        :always_visible => true,
+        :y_adjustment => 0
+    },
+    "questionShorter" => {
+        :graphic => _path + "event_question",
+        :always_visible => true,
+    :y_adjustment => 5
+    },
+    "questionShort" => {
+        :graphic => _path + "event_question",
+        :always_visible => true,
+        :y_adjustment => -8
+    },
+    "question" => {
+        :graphic => _path + "event_question",
+        :always_visible => true,
+        :y_adjustment => -16
+    },
+    "questionTall" => {
+        :graphic => _path + "event_question",
+        :always_visible => true,
+        :y_adjustment => -20
+    },
+    "questionTaller" => {
+        :graphic => _path + "event_question",
+        :always_visible => true,
+        :y_adjustment => -24
+    },
+    "questionTallest" => {
+        :graphic => _path + "event_question",
+        :always_visible => true,
+        :y_adjustment => -28
+    },
+
+#------------------------------------------------------------------------------------
+
+    "searchShortest" => {
+        :graphic => _path + "event_question",
+        :always_visible => true,
+        :y_adjustment => 0
+    },
+    "searchShorter" => {
+        :graphic => _path + "event_question",
+        :always_visible => true,
+    :y_adjustment => 5
+    },
+    "searchShort" => {
+        :graphic => _path + "event_question",
+        :always_visible => true,
+        :y_adjustment => -8
+    },
+    "search" => {
+        :graphic => _path + "event_question",
+        :always_visible => true,
+        :y_adjustment => -16
+    },
+    "searchTall" => {
+        :graphic => _path + "event_question",
+        :always_visible => true,
+        :y_adjustment => -20
+    },
+    "searchTaller" => {
+        :graphic => _path + "event_question",
+        :always_visible => true,
+        :y_adjustment => -24
+    },
+    "searchTallest" => {
+        :graphic => _path + "event_question",
+        :always_visible => true,
+        :y_adjustment => -28
+    },
+
+#------------------------------------------------------------------------------------
+
+    "sparkleShortest" => {
+        :graphic => _path + "shiny_sparkle",
+        :always_visible => true,
+        :y_adjustment => 0
+    },
+    "sparkleShorter" => {
+        :graphic => _path + "shiny_sparkle",
+        :always_visible => true,
+    :y_adjustment => 5
+    },
+    "sparkleShort" => {
+        :graphic => _path + "shiny_sparkle",
+        :always_visible => true,
+        :y_adjustment => -8
+    },
+    "sparkle" => {
+        :graphic => _path + "shiny_sparkle",
+        :always_visible => true,
+        :y_adjustment => -16
+    },
+    "sparkleTall" => {
+        :graphic => _path + "shiny_sparkle",
+        :always_visible => true,
+        :y_adjustment => -20
+    },
+    "sparkleTaller" => {
+        :graphic => _path + "shiny_sparkle",
+        :always_visible => true,
+        :y_adjustment => -24
+    },
+    "sparkleTallest" => {
+        :graphic => _path + "shiny_sparkle",
+        :always_visible => true,
+        :y_adjustment => -28
+    },
+}
+
+end

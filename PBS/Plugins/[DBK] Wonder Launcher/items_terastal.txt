@@ -1,0 +1,4 @@
+### Changes will apply automatically. ###
+#-------------------------------
+[RADIANTTERAJEWEL]
+LauncherPoints = 7
