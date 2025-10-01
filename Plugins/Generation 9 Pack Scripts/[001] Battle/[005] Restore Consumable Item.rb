@@ -34,14 +34,19 @@ class Battle::Battler
     else
       stolenData = [item, self.idxOpposingSide, nil]
     end
-    @battle.stolenItems[@index & 1][@pokemonIndex] = stolenData
+    if @stolenItems && @stolenItems[@index & 1] && 
+       @pokemonIndex < @stolenItems[@index & 1].length
+      @stolenItems[@index & 1][@pokemonIndex] = stolenData
+    end
   end
   
   #-----------------------------------------------------------------------------
   # Returns a battler's stolen item data.
   #-----------------------------------------------------------------------------
   def stolenItemData
-    return @battle.stolenItems[@index & 1][@pokemonIndex]
+    return nil if !@stolenItems || !@stolenItems[@index & 1]
+    return nil if @pokemonIndex >= @stolenItems[@index & 1].length
+    return @stolenItems[@index & 1][@pokemonIndex]
   end
   
   #-----------------------------------------------------------------------------
@@ -49,7 +54,7 @@ class Battle::Battler
   #-----------------------------------------------------------------------------
   alias stolen_pbReset pbReset
   def pbReset
-    @battle.caughtPartyIndicies.push(@pokemonIndex)
+    @caughtPartyIndicies.push(@pokemonIndex) if @caughtPartyIndicies
     stolen_pbReset
   end
   
@@ -69,7 +74,10 @@ class Battle::Battler
   def pbRemoveItem(permanent = true)
     stolen_pbRemoveItem(permanent)
     return if !@item_id.nil?
-    @battle.stolenItems[@index & 1][@pokemonIndex].clear
+    if @stolenItems && @stolenItems[@index & 1] && 
+       @pokemonIndex < @stolenItems[@index & 1].length
+      @stolenItems[@index & 1][@pokemonIndex].clear
+    end
   end
   
   #-----------------------------------------------------------------------------
@@ -77,16 +85,22 @@ class Battle::Battler
   #-----------------------------------------------------------------------------
   alias stolen_pbConsumeItem pbConsumeItem
   def pbConsumeItem(recoverable = true, symbiosis = true, belch = true)
-    if Settings::RESTORE_ITEMS_AFTER_BATTLE && @battle.wildBattle?
+    if Settings::RESTORE_ITEMS_AFTER_BATTLE && wildBattle?
       if @item_id && GameData::Item.get(@item_id).is_berry?
         # Clears user's initial item if initial hold item is a berry.
         if self.initialItem == @item_id
-          @battle.initialItems[@index & 1][@pokemonIndex] = nil
+          if @initialItems && @initialItems[@index & 1] && 
+             @pokemonIndex < @initialItems[@index & 1].length
+            @initialItems[@index & 1][@pokemonIndex] = nil
+          end
         end
         # If berry was stolen, clear initial item on original berry holder.
         if !self.stolenItemData[2].nil?
           item, side, idxParty = *self.stolenItemData
-          @battle.initialItems[side][idxParty] = nil if item == @item_id
+          if item == @item_id && @initialItems && @initialItems[side] && 
+             idxParty < @initialItems[side].length
+            @initialItems[side][idxParty] = nil
+          end
         end
       end
     end
@@ -108,15 +122,20 @@ module Battle::CatchAndStoreMixin
       # Deletes the party's stolen item data of returned item so it isn't sent to the bag.
       @caughtPokemon.each_with_index do |pkmn, i|
         next if !pkmn
+        next if !@caughtPartyIndicies || i >= @caughtPartyIndicies.length
         idxParty = @caughtPartyIndicies[i]
+        next if !@initialItems || !@initialItems[1] || idxParty.nil?
+        next if idxParty >= @initialItems[1].length
         initialItem = @initialItems[1][idxParty]
         pkmn.item = initialItem
-        @stolenItems[0].length.times do |i|
-          data = @stolenItems[0][i]
-          next if !data || data.empty?
-          next if data != [initialItem, 1, idxParty]
-          @stolenItems[0][i].clear
-          break
+        if @stolenItems && @stolenItems[0]
+          @stolenItems[0].length.times do |i|
+            data = @stolenItems[0][i]
+            next if !data || data.empty?
+            next if data != [initialItem, 1, idxParty]
+            @stolenItems[0][i].clear
+            break
+          end
         end
       end
       @caughtPartyIndicies.clear
@@ -124,11 +143,14 @@ module Battle::CatchAndStoreMixin
       # Checks each party member for any stolen items and sends them to the bag, if any.
       pbParty(0).each_with_index do |pkmn, i|
         next if !pkmn
+        next if !@initialItems || !@initialItems[0] || i >= @initialItems[0].length
         pkmn.item = @initialItems[0][i]
-        stolenData = @stolenItems[0][i]
-        next if !stolenData || stolenData.empty?
-        $bag.add(stolenData[0]) if stolenData[1] == 1
-        @stolenItems[0][i].clear
+        if @stolenItems && @stolenItems[0] && i < @stolenItems[0].length
+          stolenData = @stolenItems[0][i]
+          next if !stolenData || stolenData.empty?
+          $bag.add(stolenData[0]) if stolenData[1] == 1
+          @stolenItems[0][i].clear
+        end
       end
     end
     stolen_pbRecordAndStoreCaughtPokemon

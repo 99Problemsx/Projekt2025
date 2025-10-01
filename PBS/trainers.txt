@@ -116,3 +116,13 @@ Pokemon = CHARIZARD,63
     Item = SITRUSBERRY
 Pokemon = BLASTOISE,63
     Item = SITRUSBERRY
+#-------------------------------
+[POKEMONTRAINER_Brendan,Brendan]
+LoseText = You're pretty good!
+Pokemon = TREECKO,25
+#-------------------------------
+[POKEMONTRAINER_Brendan,Brendan,1]
+LoseText = You're really strong!
+Pokemon = GROVYLE,35
+Pokemon = SLUGMA,33
+Pokemon = PELIPPER,34

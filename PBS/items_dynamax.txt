@@ -16,6 +16,7 @@ Price = 4000
 BattleUse = Direct
 Flags = Fling_50,UsesAllBattleActions
 Description = A stone that radiates Dynamax energy. It can fully recharge your Dynamax Band in battle.
+LauncherPoints = 7
 #-------------------------------
 [DYNAMAXCANDY]
 Name = Dynamax Candy

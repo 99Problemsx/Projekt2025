@@ -20,15 +20,22 @@ end
 #-------------------------------------------------------------------------------
 alias __followingpkmn__pbStartSurfing pbStartSurfing unless defined?(__followingpkmn__pbStartSurfing)
 def pbStartSurfing(*args)
-  old_toggled = $PokemonGlobal.follower_toggled
-  surf_anim_1 = FollowingPkmn.active?
-  $PokemonGlobal.surfing = true
-  FollowingPkmn.refresh_internal
-  surf_anim_2 = FollowingPkmn.active?
-  $PokemonGlobal.surfing = false
-  FollowingPkmn.toggle_off(true) if surf_anim_1 != surf_anim_2
+  return __followingpkmn__pbStartSurfing(*args) if !FollowingPkmn.can_check?
+  
+  # Execute the actual surf command first
   ret = __followingpkmn__pbStartSurfing(*args)
-  FollowingPkmn.toggle(old_toggled, false)
+  
+  # Only refresh sprite if follower is active and can surf
+  if FollowingPkmn.active? && FollowingPkmn.waterborne_follower?
+    FollowingPkmn.refresh(false)  # Refresh to swimming sprite
+    # Force follower to follow immediately after surf
+    event = FollowingPkmn.get_event
+    if event
+      # Force immediate follow
+      event.follow_leader($game_player, true)
+    end
+  end
+  
   return ret
 end
 
@@ -38,13 +45,21 @@ end
 #-------------------------------------------------------------------------------
 alias __followingpkmn__pbEndSurf pbEndSurf unless defined?(__followingpkmn__pbEndSurf)
 def pbEndSurf(*args)
-  surf_anim_1 = FollowingPkmn.active?
+  return __followingpkmn__pbEndSurf(*args) if !FollowingPkmn.can_check?
+  
+  # Execute the actual end surf command
   ret = __followingpkmn__pbEndSurf(*args)
   return false if !ret
+  
+  # Clear surfing state
   $PokemonGlobal.current_surfing = nil
-  FollowingPkmn.refresh_internal
-  surf_anim_2 = FollowingPkmn.active?
-  $PokemonGlobal.call_refresh = [true, (surf_anim_1 != surf_anim_2), 1]
+  
+  # Refresh sprite back to normal if follower is active
+  if FollowingPkmn.active?
+    FollowingPkmn.get_event&.calculate_bush_depth
+    FollowingPkmn.refresh(false)  # Refresh to normal sprite
+  end
+  
   return ret
 end
 
@@ -60,6 +75,8 @@ def pbDive(*args)
   ret = __followingpkmn__pbDive(*args)
   $PokemonGlobal.current_diving = old_diving if !ret || !pkmn
   $game_temp.no_follower_field_move = false
+  # Fix dive animation immediately by recalculating bush depth
+  FollowingPkmn.get_event&.calculate_bush_depth if ret
   return ret
 end
 
@@ -74,6 +91,8 @@ def pbSurfacing(*args)
   ret = __followingpkmn__pbSurfacing(*args)
   $PokemonGlobal.current_diving = old_diving if !ret
   $game_temp.no_follower_field_move = false
+  # Fix surfacing animation immediately by recalculating bush depth
+  FollowingPkmn.get_event&.calculate_bush_depth if ret
   return ret
 end
 

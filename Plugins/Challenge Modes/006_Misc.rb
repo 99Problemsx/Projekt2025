@@ -73,6 +73,18 @@ class PokemonEggHatch_Scene
   end
 end
 
+#===============================================================================
+# Options Categories - Fallback if not defined
+#===============================================================================
+module OptionsCategories
+  BATTLE = :battle
+  AUDIO = :audio
+  GRAPHICS = :graphics
+  GAMEPLAY = :gameplay
+  PLUGINS = :plugins
+  SYSTEM = :system
+end unless defined?(OptionsCategories)
+
 #-------------------------------------------------------------------------------
 # Force set battle style in battle
 #-------------------------------------------------------------------------------
@@ -86,6 +98,7 @@ MenuHandlers.add(:options_menu, :battle_style, {
   "condition"   => proc { next !ChallengeModes.on?(:FORCE_SET_BATTLES) },
   "parameters"  => [_INTL("Switch"), _INTL("Set")],
   "description" => _INTL("Choose whether you can switch Pokémon when an opponent's Pokémon faints."),
+  "category"    => OptionsCategories::BATTLE,
   "get_proc"    => proc { next $PokemonSystem.battlestyle },
   "set_proc"    => proc { |value, _scene| $PokemonSystem.battlestyle = value }
 })
@@ -97,6 +110,7 @@ MenuHandlers.add(:options_menu, :give_nicknames, {
   "condition"   => proc { next !ChallengeModes.on?(:FORCE_NICKNAME) },
   "parameters"  => [_INTL("Give"), _INTL("Don't give")],
   "description" => _INTL("Choose whether you can give a nickname to a Pokémon when you obtain it."),
+  "category"    => OptionsCategories::GAMEPLAY,
   "get_proc"    => proc { next $PokemonSystem.givenicknames },
   "set_proc"    => proc { |value, _scene| $PokemonSystem.givenicknames = value }
 })

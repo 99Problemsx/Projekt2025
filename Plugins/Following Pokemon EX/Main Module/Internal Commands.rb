@@ -1,6 +1,7 @@
 module FollowingPkmn
   #-----------------------------------------------------------------------------
   @@can_refresh = false
+  @@refreshing = false  # Prevent infinite recursion
   #-----------------------------------------------------------------------------
   # Checks if the Following Pokemon is active and following the player
   #-----------------------------------------------------------------------------
@@ -20,19 +21,26 @@ module FollowingPkmn
   # Refresh Following Pokemon's visibility when Following the player
   #-----------------------------------------------------------------------------
   def self.refresh_internal
-    if !FollowingPkmn.can_check? || !FollowingPkmn.get || !$PokemonGlobal.follower_toggled
-      @@can_refresh = false
-      return
+    return if @@refreshing  # Prevent infinite recursion
+    return if !FollowingPkmn.can_check? || !FollowingPkmn.get || !$PokemonGlobal.follower_toggled
+    
+    @@refreshing = true
+    begin
+      old_refresh = @@can_refresh
+      refresh     = false
+      first_pkmn  = FollowingPkmn.get_pokemon
+      if first_pkmn
+        refresh = EventHandlers.trigger_2(:following_pkmn_appear, first_pkmn)
+        refresh = true if refresh == -1
+      end
+      @@can_refresh = refresh
+      # Only set call_refresh if it's not already set to prevent loops
+      if old_refresh != @@can_refresh && (!$PokemonGlobal.call_refresh || !$PokemonGlobal.call_refresh[1])
+        $PokemonGlobal.call_refresh = [false, true, 0]
+      end
+    ensure
+      @@refreshing = false
     end
-    old_refresh = @@can_refresh
-    refresh     = false
-    first_pkmn  = FollowingPkmn.get_pokemon
-    if first_pkmn
-      refresh = EventHandlers.trigger_2(:following_pkmn_appear, first_pkmn)
-      refresh = true if refresh == -1
-    end
-    @@can_refresh = refresh
-    $PokemonGlobal.call_refresh[1] = true if old_refresh != @@can_refresh && !$PokemonGlobal.call_refresh[1] 
   end
   #-----------------------------------------------------------------------------
   # Raises The Current Following Pokemon's Happiness by 3-5 and

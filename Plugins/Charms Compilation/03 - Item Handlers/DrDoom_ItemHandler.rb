@@ -18,6 +18,7 @@ ItemHandlers::UseFromBag.copy(:APRICORNCHARM, :BALANCECHARM, :CLOVERCHARM, :COIN
 ItemHandlers::UseFromBag.add(:NATURECHARM, proc { |item|
   pbOpenNatureCharm
   next 1
+})
 
 ItemHandlers::UseFromBag.add(:WISHINGCHARM, proc { |item|
   pbWishingStar

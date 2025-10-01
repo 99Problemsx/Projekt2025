@@ -205,24 +205,19 @@ class Scene_Map
     end
   end
   #-----------------------------------------------------------------------------
-  # Improved transfer_player method with smooth following
+  # Forcefully set the Following Pokemon direction when the player transfers to
+  # a new area
   #-----------------------------------------------------------------------------
   alias __followingpkmn__transfer_player transfer_player unless method_defined?(:__followingpkmn__transfer_player)
   def transfer_player(*args)
     __followingpkmn__transfer_player(*args)
-    
-    # Simple refresh without forced positioning
     leader = $game_player
+    # Ensure follower is unhidden after map transfer
+    FollowingPkmn.unhide_follower if FollowingPkmn.hidden?
     FollowingPkmn.refresh(false)
-    
-    # Just set direction, let the normal following logic handle positioning
     $game_temp.followers.each_follower do |event, follower|
-      next if !event
-      
-      # Only set direction, don't force position
       pbTurnTowardEvent(event, leader)
       follower.direction = event.direction
-      
       leader = event
     end
   end
@@ -290,13 +285,19 @@ EventHandlers.add(:on_enter_map, :pokecenter_follower_reset, proc { |_old_map_id
 # Refresh Following Pokemon after taking a step, when a refresh is queued
 #-------------------------------------------------------------------------------
 EventHandlers.add(:on_player_step_taken, :forced_follower_refresh, proc {
+  next if !$PokemonGlobal.call_refresh || !$PokemonGlobal.call_refresh.is_a?(Array)
   next if !$PokemonGlobal.call_refresh[0]
+  
   # Wait for steps
   if $PokemonGlobal.call_refresh[2] && $PokemonGlobal.call_refresh[2] > 0
     $PokemonGlobal.call_refresh[2] -= 1
     $PokemonGlobal.call_refresh.delete_at(2) if $PokemonGlobal.call_refresh[2] == 0
     next
   end
+  
+  # Prevent infinite loops by checking if we're already refreshing
+  next if FollowingPkmn.class_variable_get(:@@refreshing)
+  
   # Refresh queued
   FollowingPkmn.refresh($PokemonGlobal.call_refresh[1])
   $PokemonGlobal.call_refresh = false

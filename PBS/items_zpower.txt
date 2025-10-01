@@ -24,6 +24,7 @@ Price = 4000
 BattleUse = Direct
 Flags = Fling_30,UsesAllBattleActions
 Description = A crystal brimming with Z-Power. It can fully recharge your Z-Ring in battle.
+LauncherPoints = 7
 #-------------------------------
 [NORMALIUMZ]
 Name = Normalium Z

@@ -42,6 +42,8 @@ module FollowingPkmn
   def self.toggle(forced = nil, anim = nil)
     return if !FollowingPkmn.can_check? || !FollowingPkmn.get
     return if !FollowingPkmn.get_pokemon
+    return if FollowingPkmn.class_variable_get(:@@refreshing)  # Prevent infinite recursion
+    
     anim_1 = FollowingPkmn.active?
     if !forced.nil?
       # This may seem redundant but it keeps follower_toggled a boolean always
@@ -59,13 +61,33 @@ module FollowingPkmn
   # Script Command to toggle Following Pokemon off
   #-----------------------------------------------------------------------------
   def self.toggle_off(anim = nil)
-    FollowingPkmn.toggle(false, anim)
+    return if !FollowingPkmn.can_check? || !FollowingPkmn.get
+    return if !FollowingPkmn.get_pokemon
+    return if FollowingPkmn.class_variable_get(:@@refreshing)
+    
+    anim_1 = FollowingPkmn.active?
+    $PokemonGlobal.follower_toggled = false
+    anim_2 = FollowingPkmn.active?
+    anim = anim_1 != anim_2 if anim.nil?
+    FollowingPkmn.refresh(anim)
+    $game_temp.followers.move_followers
+    $game_temp.followers.turn_followers
   end
   #-----------------------------------------------------------------------------
   # Script Command to toggle Following Pokemon on
   #-----------------------------------------------------------------------------
   def self.toggle_on(anim = nil)
-    FollowingPkmn.toggle(true, anim)
+    return if !FollowingPkmn.can_check? || !FollowingPkmn.get
+    return if !FollowingPkmn.get_pokemon
+    return if FollowingPkmn.class_variable_get(:@@refreshing)
+    
+    anim_1 = FollowingPkmn.active?
+    $PokemonGlobal.follower_toggled = true
+    anim_2 = FollowingPkmn.active?
+    anim = anim_1 != anim_2 if anim.nil?
+    FollowingPkmn.refresh(anim)
+    $game_temp.followers.move_followers
+    $game_temp.followers.turn_followers
   end
   #-----------------------------------------------------------------------------
   # Script Command for talking to Following Pokemon

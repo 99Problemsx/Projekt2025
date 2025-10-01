@@ -14,9 +14,11 @@ class Pokemon
       value = value.clamp(1, GameData::GrowthRate.max_level)
     end
     
-    # Additional check for hard level cap - but respect bypass switch
-    if LevelCapsEX.hard_cap? && value > LevelCapsEX.level_cap && !$game_switches[LevelCapsEX::LEVEL_CAP_BYPASS_SWITCH]
-      value = LevelCapsEX.level_cap
+    # Additional check for level caps - but respect bypass switch
+    if !$game_switches[LevelCapsEX::LEVEL_CAP_BYPASS_SWITCH]
+      if (LevelCapsEX.hard_cap? || LevelCapsEX.soft_cap?) && value > LevelCapsEX.level_cap
+        value = LevelCapsEX.level_cap
+      end
     end
     
     @exp = growth_rate.minimum_exp_for_level(value)

@@ -70,7 +70,16 @@ module ChallengeModes
     vp = Viewport.new(0, 0, Graphics.width, Graphics.height)
     infowindow = Window_AdvancedTextPokemon.newWithSize("", 0, Graphics.height - 96, Graphics.width, 96, vp)
     infowindow.setSkin(MessageConfig.pbGetSystemFrame)
-    cmdwindow = Window_CommandPokemon_Challenge.new([])
+    enhanced_ui = false
+    begin
+      cmdwindow = Window_CommandPokemon_Challenge.new([])
+      enhanced_ui = true
+    rescue => e
+      Console.echo_warn("Enhanced UI nicht verfügbar: #{e.message}")
+      # Fallback zur Standard-Klasse
+      cmdwindow = Window_CommandPokemon.new([])
+      enhanced_ui = false
+    end
     cmdwindow.viewport = vp
     cmdwindow.y = 64
     text = _INTL("Challenge Options")
@@ -90,7 +99,18 @@ module ChallengeModes
           commands.push([RULES[rule][:name], toggle])
         end
         commands.push(_INTL("Confirm"))
-        cmdwindow.commands = commands
+        
+        if enhanced_ui && cmdwindow.respond_to?(:commands=)
+          cmdwindow.commands = commands
+        else
+          # Für Standard Window_CommandPokemon - recreate window
+          cmdwindow.dispose
+          plain_commands = commands.map { |cmd| cmd.is_a?(Array) ? cmd[0] : cmd }
+          cmdwindow = Window_CommandPokemon.new(plain_commands)
+          cmdwindow.viewport = vp
+          cmdwindow.y = 64
+        end
+        
         cmdwindow.width = Graphics.width
         cmdwindow.height = Graphics.height - 160
         need_refresh = false

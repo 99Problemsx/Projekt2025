@@ -6,3 +6,355 @@ Price = 0
 FieldUse = Direct
 Flags = KeyItem
 Description = A mystical charm that repels wild Pokémon when activated. Can be toggled on and off.
+#-------------------------------
+[ROCKSMASHITEM]
+Name = Hammer
+NamePlural = Hammers
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItems
+Description = This can be used to smash rocks.
+#-------------------------------
+[CUTITEM]
+Name = Axe
+NamePlural = Axes
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = This can be used to cut trees.
+#-------------------------------
+[ICESMASHITEM]
+Name = Ice Pick
+NamePlural = Ice Picks
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = This can be used on ice barriers to break at ease.
+#-------------------------------
+[HEADBUTTITEM]
+Name = Punching Gloves
+NamePlural = Punching Gloves
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Punch the tree to shake it.
+#-------------------------------
+[SWEETSCENTITEM]
+Name = Essence Mixture
+NamePlural = Essence Mixture
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = It allows you spread a sweet essence around you.
+#-------------------------------
+[STRENGTHITEM]
+Name = Strength Gauntlet
+NamePlural = Strength Gauntlets
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = This can be used to push big objects.
+#-------------------------------
+[FLASHITEM]
+Name = Lantern
+NamePlural = Lanterns
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = This can be used to illuminate area.
+#-------------------------------
+[DEFOGITEM]
+Name = Magic Fan
+NamePlural = Magic Fans
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A magic fan that can push fog away..
+#-------------------------------
+[OCARINA]
+Name = Ocarina
+NamePlural = Ocarinas
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = This special flute can change the weather, by playing the right tunes.
+#-------------------------------
+[HARP]
+Name = Harp of Ages
+NamePlural = Harp of Ages
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = This special flute can change the weather, by playing the right tunes.
+#-------------------------------
+[LUTE]
+Name = Lute
+NamePlural = Lutes
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = This special flute can change the weather, by playing the right tunes.
+#-------------------------------
+[CAMOUFLAGEITEM]
+Name = Cloak of Kecleon
+NamePlural = Cloaks of Kecleon
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A wizard used to own this.
+#-------------------------------
+[SURFITEM]
+Name = Life Buoy
+NamePlural = Life Buoy
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = This can be used to float on the water.
+#-------------------------------
+[DIVEITEM]
+Name = Scuba Gear
+NamePlural = Scuba Gears
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = It allows you breath under water.
+#-------------------------------
+[WATERFALLITEM]
+Name = Swimming gloves
+NamePlural = Swimming gloves
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Unique swimming gloves that allow the user to swim up a waterfall.
+#-------------------------------
+[WHIRLPOOLITEM]
+Name = Flippers
+NamePlural = Flippers
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Unique flippers that allow the user to gain enough speed to cross a whirlpool.
+#-------------------------------
+[FLYITEM]
+Name = Nimbus
+NamePlural = Nimbus
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A flying cloud that can only be ridden by those with a pure heart.
+#-------------------------------
+[DIGITEM]
+Name = Used Shovel
+NamePlural = Used Shovels
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = It is a Shovel, it can dig holes. Used to belong to a great knight.
+#-------------------------------
+[TELEPORTITEM]
+Name = Disk of returning
+NamePlural = Disks of returning
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = This can be used to return to the last healing place.
+#-------------------------------
+[ROCKCLIMBITEM]
+Name = Climbing Gear
+NamePlural = Climbing Gears
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = This can be used to climb big ledges.
+#-------------------------------
+[LIFTITEM]
+Name = Power Grip
+NamePlural = Power Grips
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = This can be used to lift objects.
+#-------------------------------
+[LAVASURFITEM]
+Name = Obsidan Boat
+NamePlural = Obsidan Boat
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = This can be used to cross lava, How does it float?.
+#-------------------------------
+[LAVAFALLITEM]
+Name = Lava gloves
+NamePlural = Lava gloves
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Unique lava gloves that allow the user to travel up a lavafall.
+#-------------------------------
+[LAVASWIRLITEM]
+Name = Lava Flippers
+NamePlural = Lava Flippers
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Unique flippers that allow the user to gain enough speed to cross a lavaswhirl.
+#-------------------------------
+[SPEICALROD]
+Name = Speical Rod
+NamePlural = Speical Rod
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A High-tech, heat resistant fishing rod. Can be use to fish for wild Pokémon.
+#-------------------------------
+[SENSETRUTHITEM]
+Name = Magic Monocle
+NamePlural = Magic Monocles
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A Special Piece the can reveal the .
+#-------------------------------
+[SECRETPOWERITEM]
+Name = Secret Base Builder
+NamePlural = Secret Base Builders
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Do you wanna build a secret base?.
+#-------------------------------
+[SANDSTORMITEM]
+Name = Go-Goggles
+NamePlural = Go-Goggles
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Nifty goggles to protect eyes from desert sandstorms.
+#-------------------------------
+[MUSICNOTEBOOKITEM]
+Name = Music book
+NamePlural = Music books
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = A Music book to hold music sheets.
+#-------------------------------
+[MUSICSHEETCLEARING]
+Name = Clearing
+NamePlural = Clearings
+Instrument = 1
+Price = 0
+FieldUse = Direct
+Flags = KeyItem, MusicSheet
+Description = A Music sheet with the song title Clearing.
+#-------------------------------
+[MUSICSHEETRAIN]
+Name = Rainy
+NamePlural = Rainy
+Instrument = 1
+Price = 0
+FieldUse = Direct
+Flags = KeyItem, MusicSheet
+Description = A Music sheet with the song title Rainy.
+#-------------------------------
+[MUSICSHEETSTORM]
+Name = Stormy
+NamePlural = Stormy
+Instrument = 1
+Price = 0
+FieldUse = Direct
+Flags = KeyItem, MusicSheet
+Description = A Music sheet with the song title Stormy.
+#-------------------------------
+[MUSICSHEETSNOW]
+Name = Snowy
+NamePlural = Snowy
+Instrument = 1
+Price = 0
+FieldUse = Direct
+Flags = KeyItem, MusicSheet
+Description = A Music sheet with the song title Snowy.
+#-------------------------------
+[MUSICSHEETBLIZZARD]
+Name = Blizzard
+NamePlural = Blizzards
+Instrument = 1
+Price = 0
+FieldUse = Direct
+Flags = KeyItem, MusicSheet
+Description = A Music sheet with the song title Blizzard.
+#-------------------------------
+[MUSICSHEETSANDSTORM]
+Name = Sandstorm
+NamePlural = Sandstorms
+Instrument = 1
+Price = 0
+FieldUse = Direct
+Flags = KeyItem, MusicSheet
+Description = A Music sheet with the song title Sandstorm.
+#-------------------------------
+[MUSICSHEETHEAVYRAIN]
+Name = Stormy Rain
+NamePlural = Stormy Rains
+Instrument = 1
+Price = 0
+FieldUse = Direct
+Flags = KeyItem, MusicSheet
+Description = A Music sheet with the song title Stormy Rain.
+#-------------------------------
+[MUSICSHEETSUN]
+Name = Sunny
+NamePlural = Sunnys
+Instrument = 1
+Price = 0
+FieldUse = Direct
+Flags = KeyItem, MusicSheet
+Description = A Music sheet with the song title Sunny.
+#-------------------------------
+[MUSICSHEETFOG]
+Name = Foggy
+NamePlural = Foggy
+Instrument = 1
+Price = 0
+FieldUse = Direct
+Flags = KeyItem, MusicSheet
+Description = A Music sheet with the song title Foggy.
+#-------------------------------
+[BOMBITEM]
+Name = Bomb
+NamePlural = Bombs
+Pocket = 8
+Price = 0
+FieldUse = Direct
+Flags = KeyItem
+Description = Testing Bombs.
+#-------------------------------

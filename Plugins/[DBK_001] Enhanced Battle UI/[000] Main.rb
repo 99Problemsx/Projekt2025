@@ -25,7 +25,7 @@ module Settings
   # species you are encountering for the first time. When true, type effectiveness 
   # will always be displayed, even for new species.
   #-----------------------------------------------------------------------------
-  SHOW_TYPE_EFFECTIVENESS_FOR_NEW_SPECIES = false
+  SHOW_TYPE_EFFECTIVENESS_FOR_NEW_SPECIES = true
 end
 
 

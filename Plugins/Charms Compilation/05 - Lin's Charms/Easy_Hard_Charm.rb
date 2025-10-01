@@ -3,6 +3,7 @@
 #===============================================================================
 
 def pbWildDifficultyCharms(pkmn)
+  return if !$player
   extra_level = 0
   extra_level = LinCharmConfig::EASY_LEVEL if $player.activeCharm?(:EASYCHARM)
   extra_level = LinCharmConfig::HARD_LEVEL if $player.activeCharm?(:HARDCHARM)
@@ -15,6 +16,7 @@ end
 
 EventHandlers.add(:on_trainer_load, :easy_hard_charms,
   proc { |trainer|
+    next if !$player || !$player.party
     extra_level = 0
     extra_level = LinCharmConfig::EASY_LEVEL if $player.activeCharm?(:EASYCHARM)
     extra_level = LinCharmConfig::HARD_LEVEL if $player.activeCharm?(:HARDCHARM)
@@ -29,7 +31,7 @@ EventHandlers.add(:on_trainer_load, :easy_hard_charms,
         pokemon.calc_stats
       end
     end
-    if LinCharmConfig::EXTRA_POKEMON && !$player.activeCharm?(:HARDCHARM)
+    if LinCharmConfig::EXTRA_POKEMON && $player && $player.party && !$player.activeCharm?(:HARDCHARM)
       position = trainer.party.length - 1 - LinCharmConfig::POKEMON_POSITION
       trainer.remove_pokemon_at_index(position)
     end

@@ -63,28 +63,47 @@ module FollowingPkmn
     return false
   end
   #-----------------------------------------------------------------------------
+  # Script Command for checking whether the current follower should use swimming sprites
+  #-----------------------------------------------------------------------------
+  def self.should_use_swimming_sprites?
+    return false if !FollowingPkmn.can_check? || !FollowingPkmn.active?
+    # Use swimming sprites only when player is actually surfing AND the follower is on water
+    return false if !$PokemonGlobal.surfing || !FollowingPkmn.waterborne_follower?
+    
+    # Check if the follower is actually on a water tile
+    event = FollowingPkmn.get_event
+    return false if !event
+    
+    # Check the terrain tag of the follower's current position
+    terrain_tag = $map_factory.getTerrainTag(event.map.map_id, event.x, event.y)
+    return terrain_tag.can_surf
+  end
+  #-----------------------------------------------------------------------------
   # Forcefully refresh Following Pokemon sprite with animation (if specified)
   #-----------------------------------------------------------------------------
   def self.refresh(anim = false)
     return if !FollowingPkmn.can_check?
+    return if FollowingPkmn.class_variable_get(:@@refreshing)  # Prevent infinite recursion
+    
     event = FollowingPkmn.get_event
     FollowingPkmn.remove_sprite
     event&.calculate_bush_depth
     first_pkmn = FollowingPkmn.get_pokemon
     return if !first_pkmn
+    
     FollowingPkmn.refresh_internal
     ret = FollowingPkmn.active?
     event = FollowingPkmn.get_event
+    
     if anim
       anim_name = ret ? :ANIMATION_COME_OUT : :ANIMATION_COME_IN
       anim_id   = nil
       anim_id   = FollowingPkmn.const_get(anim_name) if FollowingPkmn.const_defined?(anim_name)
       if event && anim_id
         $scene.spriteset.addUserAnimation(anim_id, event.x, event.y, false, 1)
-        pbMoveRoute($game_player, [PBMoveRoute::WAIT, 2])
-        pbWait(0.2)
       end
     end
+    
     FollowingPkmn.change_sprite(first_pkmn) if ret
     FollowingPkmn.move_route([(ret ? PBMoveRoute::STEP_ANIME_ON : PBMoveRoute::STEP_ANIME_OFF)]) if FollowingPkmn::ALWAYS_ANIMATE
     event&.calculate_bush_depth
@@ -106,8 +125,9 @@ module FollowingPkmn
   def self.change_sprite(pkmn)
     shiny = pkmn.shiny?
     shiny = pkmn.superVariant if (pkmn.respond_to?(:superVariant) && !pkmn.superVariant.nil? && pkmn.superShiny?)
+    swimming = FollowingPkmn.should_use_swimming_sprites?
     fname = GameData::Species.ow_sprite_filename(pkmn.species, pkmn.form,
-      pkmn.gender, shiny, pkmn.shadow)
+      pkmn.gender, shiny, pkmn.shadow, swimming)
     fname.gsub!("Graphics/Characters/", "")
     FollowingPkmn.get_event&.character_name = fname
     FollowingPkmn.get_data&.character_name  = fname

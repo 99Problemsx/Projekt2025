@@ -77,12 +77,18 @@ class Battle::Scene::PokemonDataBox
     @types_sprite.bitmap.clear
     width  = @types_bitmap.width
     height = @types_bitmap.height / GameData::Type.count
-    types  = @battler.pbTypes.clone
-    if @battler.effects[PBEffects::Illusion]
-      illusion_types = @battler.effects[PBEffects::Illusion].types
-      base_types = @battler.pokemon.types
-      base_types.each { |type| types.delete(type) }
-      illusion_types.reverse.each { |type| types.insert(0, type) }
+    
+    # Handle FakeBattler objects (Safari Zone, etc.) that don't have pbTypes method
+    if @battler.is_a?(Battle::FakeBattler)
+      types = @battler.pokemon ? @battler.pokemon.types : [:NORMAL]
+    else
+      types = @battler.pbTypes.clone
+      if @battler.effects[PBEffects::Illusion]
+        illusion_types = @battler.effects[PBEffects::Illusion].types
+        base_types = @battler.pokemon.types
+        base_types.each { |type| types.delete(type) }
+        illusion_types.reverse.each { |type| types.insert(0, type) }
+      end
     end
     types.each_with_index do |type, i|
       type_number = GameData::Type.get(type).icon_position
@@ -111,5 +117,14 @@ class Battle::Battler
     @battle.scene.sprites["dataBox_#{args[1]&.index || 0}"]&.refresh
     @battle.scene.sprites["dataBox_#{args[2]&.index || 0}"]&.refresh
     return ret
+  end
+end
+
+#-------------------------------------------------------------------------------
+# Compatibility for FakeBattler (Safari Zone, etc.)
+#-------------------------------------------------------------------------------
+class Battle::FakeBattler
+  def pbTypes(withExtraType = false)
+    return @pokemon ? @pokemon.types : [:NORMAL]
   end
 end
