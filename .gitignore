@@ -1,0 +1,62 @@
+# ============================================================================
+# Git Ignore für RPG Maker XP / Pokémon Essentials Projekt
+# ============================================================================
+
+# Release Builds
+Release/
+*.zip
+*.7z
+*.rar
+
+# Verschlüsselte Daten (nicht in Git committen!)
+GameData.pack
+test_toc.rb
+
+# RPG Maker Temp Dateien
+*.ldb
+*.rxproj.bak
+
+# Windows
+Thumbs.db
+desktop.ini
+*.lnk
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Logs
+*.log
+debug*.txt
+
+# Backup Dateien
+*.bak
+*.backup
+*~
+
+# Game Saves (optional - je nachdem ob du die committen willst)
+# Game.rxdata
+
+# Scripts Backup
+Data/Scripts.rxdata.backup
+
+# Editor Dateien
+.vscode/
+.idea/
+*.sublime-*
+
+# Ruby
+*.gem
+.bundle/
+vendor/
+
+# Temporäre Build Dateien
+build/
+dist/
+
+# Audio (optional - wenn zu groß)
+# Audio/BGM/*.ogg
+# Audio/BGS/*.ogg
+# Audio/ME/*.ogg
+# Audio/SE/*.ogg

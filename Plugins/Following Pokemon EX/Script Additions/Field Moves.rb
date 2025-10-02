@@ -22,18 +22,50 @@ alias __followingpkmn__pbStartSurfing pbStartSurfing unless defined?(__following
 def pbStartSurfing(*args)
   return __followingpkmn__pbStartSurfing(*args) if !FollowingPkmn.can_check?
   
-  # Execute the actual surf command first
+  # Prevent infinite loop if called recursively
+  if defined?($follower_surfing_setup) && $follower_surfing_setup
+    return __followingpkmn__pbStartSurfing(*args)
+  end
+  
+  # Get follower and store player's current position BEFORE player jumps
+  event = FollowingPkmn.get_event
+  player_old_x = $game_player.x
+  player_old_y = $game_player.y
+  player_direction = $game_player.direction
+  
+  # Execute the actual surf command (player jumps forward onto water)
   ret = __followingpkmn__pbStartSurfing(*args)
   
-  # Only refresh sprite if follower is active and can surf
-  if FollowingPkmn.active? && FollowingPkmn.waterborne_follower?
-    FollowingPkmn.refresh(false)  # Refresh to swimming sprite
-    # Force follower to follow immediately after surf
-    event = FollowingPkmn.get_event
-    if event
-      # Force immediate follow
-      event.follow_leader($game_player, true)
+  # Move follower to player's old position and setup surfing sprite
+  if ret && event && FollowingPkmn.get_pokemon
+    $follower_surfing_setup = true  # Prevent recursion
+    
+    pkmn = FollowingPkmn.get_pokemon
+    
+    # Initialize last_leader position to player's OLD position (before jump)
+    # This ensures the first follow_leader call works correctly
+    event.instance_variable_set(:@last_leader_x, player_old_x)
+    event.instance_variable_set(:@last_leader_y, player_old_y)
+    
+    # Turn follower towards player's direction
+    event.turn_towards_leader($game_player)
+    
+    # Move follower forward one step using move commands for smooth animation
+    case player_direction
+    when 2 then event.move_down    # Down
+    when 4 then event.move_left    # Left
+    when 6 then event.move_right   # Right
+    when 8 then event.move_up      # Up
     end
+    
+    # Change sprite directly to swimming form (bypass active? check)
+    FollowingPkmn.change_sprite(pkmn)
+    
+    # Enable both step and walk animation for smooth swimming
+    event.instance_variable_set(:@step_anime, true)
+    event.instance_variable_set(:@walk_anime, true)
+    
+    $follower_surfing_setup = false  # Clear flag
   end
   
   return ret
@@ -47,6 +79,8 @@ alias __followingpkmn__pbEndSurf pbEndSurf unless defined?(__followingpkmn__pbEn
 def pbEndSurf(*args)
   return __followingpkmn__pbEndSurf(*args) if !FollowingPkmn.can_check?
   
+  event = FollowingPkmn.get_event
+  
   # Execute the actual end surf command
   ret = __followingpkmn__pbEndSurf(*args)
   return false if !ret
@@ -54,10 +88,11 @@ def pbEndSurf(*args)
   # Clear surfing state
   $PokemonGlobal.current_surfing = nil
   
-  # Refresh sprite back to normal if follower is active
-  if FollowingPkmn.active?
-    FollowingPkmn.get_event&.calculate_bush_depth
-    FollowingPkmn.refresh(false)  # Refresh to normal sprite
+  # Refresh sprite back to normal - use change_sprite directly like at start
+  if event && FollowingPkmn.get_pokemon
+    pkmn = FollowingPkmn.get_pokemon
+    FollowingPkmn.change_sprite(pkmn)
+    event.calculate_bush_depth
   end
   
   return ret

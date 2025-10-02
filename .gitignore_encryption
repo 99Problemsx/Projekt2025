@@ -1,0 +1,36 @@
+# ============================================================================
+# .gitignore für RPG Maker XP Projekt mit Encryption
+# ============================================================================
+
+# Verschlüsselte Daten (nicht öffentlich teilen!)
+GameData.pack
+game_packager.rb
+build_encrypted_game.rb
+
+# Release Build
+Release/
+unpacked/
+
+# Backup Dateien
+*.backup
+*.bak
+*~
+
+# Development
+.vscode/
+.idea/
+*.log
+
+# RPG Maker temporäre Dateien
+*.lnk
+*.rxproj.old
+
+# Windows
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# MacOS
+.DS_Store
+.AppleDouble
+.LSOverride

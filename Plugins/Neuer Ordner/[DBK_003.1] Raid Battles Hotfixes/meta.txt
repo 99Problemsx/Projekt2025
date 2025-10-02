@@ -1,0 +1,5 @@
+Name         = Raid Battles Hotfixes
+Version      = 1.0.0
+Essentials   = 21.1
+Website      = no
+Credits      = Lucidious89, Community Bug Reports

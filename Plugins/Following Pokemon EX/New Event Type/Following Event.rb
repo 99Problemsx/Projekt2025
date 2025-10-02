@@ -28,6 +28,59 @@ class Game_FollowingPkmn < Game_Follower
   end
 
   #-----------------------------------------------------------------------------
+  # Override update_move for smooth surfing interpolation
+  #-----------------------------------------------------------------------------
+  def update_move
+    # Check if we're surfing
+    is_surfing = $PokemonGlobal.surfing && FollowingPkmn.can_check? && FollowingPkmn.get_pokemon
+    
+    if is_surfing
+      # Calculate target real position
+      target_real_x = @x * Game_Map::REAL_RES_X
+      target_real_y = @y * Game_Map::REAL_RES_Y
+      
+      # Smooth interpolation - move 25% of the distance per frame (fast enough to keep up)
+      if @real_x != target_real_x || @real_y != target_real_y
+        diff_x = target_real_x - @real_x
+        diff_y = target_real_y - @real_y
+        
+        # Move towards target with fast interpolation
+        @real_x += (diff_x * 0.25).round
+        @real_y += (diff_y * 0.25).round
+        
+        # Snap to target if very close (prevents endless micro-movements)
+        @real_x = target_real_x if (target_real_x - @real_x).abs < 4
+        @real_y = target_real_y if (target_real_y - @real_y).abs < 4
+        
+        increase_steps
+      end
+      
+      # Increment animation counter like normal movement does (from Game_Character#update_move)
+      @anime_count += @delta_t if @walk_anime || @step_anime
+      @moved_this_frame = true
+    else
+      # Normal update_move for non-surfing
+      super
+    end
+  end
+  
+  #-----------------------------------------------------------------------------
+  # Override update for surfing animation
+  #-----------------------------------------------------------------------------
+  def update
+    # Check if we're surfing
+    is_surfing = $PokemonGlobal.surfing && FollowingPkmn.can_check? && FollowingPkmn.get_pokemon
+    
+    if is_surfing
+      # Force step_anime to true during surf so animation always plays
+      @step_anime = true
+      @walk_anime = true
+    end
+    
+    super
+  end
+
+  #-----------------------------------------------------------------------------
   # Update pattern at a constant rate independent of move speed
   #-----------------------------------------------------------------------------
   def update_pattern
@@ -133,22 +186,75 @@ class Game_FollowingPkmn < Game_Follower
   end
 
   #-----------------------------------------------------------------------------
+  # Special smooth movement for surfing - instant position with smooth interpolation
+  #-----------------------------------------------------------------------------
+  def surf_moveto(target_x, target_y)
+    # Calculate which direction to move
+    dx = target_x - @x
+    dy = target_y - @y
+    
+    return if dx == 0 && dy == 0  # Already at target
+    
+    # Store current real position before instant move
+    old_real_x = @real_x
+    old_real_y = @real_y
+    
+    # Set direction based on movement
+    if dx > 0
+      @direction = 6  # right
+    elsif dx < 0
+      @direction = 4  # left
+    elsif dy > 0
+      @direction = 2  # down
+    elsif dy < 0
+      @direction = 8  # up
+    end
+    
+    # Instant position update (logical position)
+    @x = target_x
+    @y = target_y
+    
+    # Set real position to create smooth interpolation effect
+    # Instead of instant jump, start from old position and let update_move handle animation
+    @real_x = old_real_x
+    @real_y = old_real_y
+    
+    # Mark as moving so the movement animation plays
+    @stop_count = 0
+    @walk_anime = true
+    @step_anime = true
+  end
+
+  #-----------------------------------------------------------------------------
   # Updating the method which controls event position to include changes to
   # work with Marin and Boonzeet's side stairs
   #-----------------------------------------------------------------------------
   def follow_leader(leader, instant = false, leaderIsTrueLeader = true)
     return if @move_route_forcing
-    # Don't interrupt movement unless leader has moved significantly
-    return if (jumping? || moving?) && !instant && 
-              leader.x == @last_leader_x && leader.y == @last_leader_y
-    end_movement
+    
+    # Force immediate follow when surfing
+    is_surfing = $PokemonGlobal.surfing && FollowingPkmn.can_check? && FollowingPkmn.get_pokemon
+    
+    if is_surfing
+      # When surfing: ALWAYS follow immediately
+      if leader.x != @last_leader_x || leader.y != @last_leader_y
+        # Leader moved - immediately follow
+        # Don't wait for movement animation - position updates instantly, animation is visual only
+      end
+      # Ensure animation is enabled while surfing
+      @step_anime = true
+      @walk_anime = true
+    else
+      # Normal behavior: Don't interrupt movement unless leader has moved significantly
+      if (jumping? || moving?) && !instant &&
+         leader.x == @last_leader_x && leader.y == @last_leader_y
+        return
+      end
+      end_movement
+    end
 
     # Check if the leader has moved to a new tile
     if @last_leader_x.nil? || @last_leader_y.nil? || leader.x != @last_leader_x || leader.y != @last_leader_y
-      # Force immediate follow when surfing - ALWAYS follow on water
-      if $PokemonGlobal.surfing && FollowingPkmn.waterborne_follower?
-        instant = true
-      end
       
       @last_leader_x = leader.x
       @last_leader_y = leader.y
@@ -216,14 +322,28 @@ class Game_FollowingPkmn < Game_Follower
         @real_y = @y * Game_Map::REAL_RES_Y
       end
 
-      if instant || !maps_connected || ($PokemonGlobal.surfing && FollowingPkmn.waterborne_follower?)
+      # Use instant teleportation for instant moves or disconnected maps
+      if instant || !maps_connected
         moveto(target[1], target[2])
+      elsif is_surfing
+        # For surfing: use our custom smooth movement with instant positioning
+        surf_moveto(target[1], target[2])
       else
+        # For normal following: use fancy_moveto
         fancy_moveto(target[1], target[2], leader)
       end
       
       # Fix for tall grass and surf animations - recalculate bush depth after movement
       calculate_bush_depth
+      
+      # Sprite refresh logic moved here to prevent stack overflow
+      # Check if we moved from/to water and refresh sprite if needed
+      new_terrain = $map_factory.getTerrainTag(self.map.map_id, @x, @y)
+      old_terrain = $map_factory.getTerrainTag(self.map.map_id, @last_leader_x, @last_leader_y) if @last_leader_x && @last_leader_y
+      if old_terrain && (old_terrain.can_surf != new_terrain.can_surf)
+        pkmn = FollowingPkmn.get_pokemon
+        FollowingPkmn.change_sprite(pkmn) if pkmn
+      end
     end
   end
 
@@ -231,15 +351,8 @@ class Game_FollowingPkmn < Game_Follower
   # Override moveto to ensure bush depth is recalculated after any movement
   #-----------------------------------------------------------------------------
   def moveto(x, y)
-    old_terrain = $map_factory.getTerrainTag(self.map.map_id, @x, @y) if @x && @y
     super(x, y)
     calculate_bush_depth
-    # Check if we moved from/to water and refresh sprite if needed
-    new_terrain = $map_factory.getTerrainTag(self.map.map_id, x, y)
-    if old_terrain && (old_terrain.can_surf != new_terrain.can_surf)
-      pkmn = FollowingPkmn.get_pokemon
-      FollowingPkmn.change_sprite(pkmn) if pkmn
-    end
     # Ensure smooth positioning after surf
     @real_x = @x * Game_Map::REAL_RES_X
     @real_y = @y * Game_Map::REAL_RES_Y
@@ -249,15 +362,8 @@ class Game_FollowingPkmn < Game_Follower
   # Override fancy_moveto to ensure bush depth is recalculated after movement
   #-----------------------------------------------------------------------------
   def fancy_moveto(new_x, new_y, leader)
-    old_terrain = $map_factory.getTerrainTag(self.map.map_id, @x, @y) if @x && @y
     super(new_x, new_y, leader)
     calculate_bush_depth
-    # Check if we moved from/to water and refresh sprite if needed
-    new_terrain = $map_factory.getTerrainTag(self.map.map_id, new_x, new_y)
-    if old_terrain && (old_terrain.can_surf != new_terrain.can_surf)
-      pkmn = FollowingPkmn.get_pokemon
-      FollowingPkmn.change_sprite(pkmn) if pkmn
-    end
   end
 
   #-----------------------------------------------------------------------------
@@ -375,7 +481,12 @@ class Scene_Map
   alias __followingpkmn__update update unless method_defined?(:__followingpkmn__update)
   def update(*args)
     super(*args)
-    if $game_player.moving?
+    
+    # When surfing, update followers every frame for smooth following
+    if $PokemonGlobal.surfing && FollowingPkmn.can_check? && FollowingPkmn.get_pokemon
+      $game_temp.followers.move_followers
+      $game_temp.followers.turn_followers
+    elsif $game_player.moving?
       $game_temp.followers.move_followers
       $game_temp.followers.turn_followers
     end

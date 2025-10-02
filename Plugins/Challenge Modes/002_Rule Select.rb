@@ -66,7 +66,7 @@ module ChallengeModes
   def select_custom_rules
     selected_rules = []
     catch_clauses  = [:SHINY_CLAUSE, :DUPS_CLAUSE, :GIFT_CLAUSE]
-    special_modes  = [:MONOTYPE_MODE, :RANDOMIZER_MODE]
+    special_modes  = [:MONOTYPE_MODE, :RANDOMIZER_MODE, :HARDCORE_MODE]
     vp = Viewport.new(0, 0, Graphics.width, Graphics.height)
     infowindow = Window_AdvancedTextPokemon.newWithSize("", 0, Graphics.height - 96, Graphics.width, 96, vp)
     infowindow.setSkin(MessageConfig.pbGetSystemFrame)

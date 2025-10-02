@@ -1,4 +1,4 @@
 Name       = Challenge Modes
-Version    = 1.1
+Version    = 1.2
 Website    = https://www.youtube.com/watch?v=dQw4w9WgXcQ
 Credits    = Nononever, Golisopod User, Luka S.J. 
