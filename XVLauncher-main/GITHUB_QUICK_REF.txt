@@ -1,0 +1,168 @@
+═══════════════════════════════════════════════════════════════
+  XVLAUNCHER - GITHUB QUICK REFERENCE
+═══════════════════════════════════════════════════════════════
+
+🔧 KONFIGURATION (Einmalig)
+───────────────────────────────────────────────────────────────
+1. GitHub Token erstellen:
+   https://github.com/settings/tokens
+   → Scope: "repo" oder "public_repo"
+   
+2. Resources.resx bearbeiten:
+   AccessToken: ghp_DEIN_TOKEN
+   UpdateUrl: https://raw.githubusercontent.com/USERNAME/REPO/{0}/
+   
+3. Settings.settings bearbeiten:
+   ProjectID: USERNAME/REPONAME
+   GameDirectory: Game
+
+═══════════════════════════════════════════════════════════════
+
+📦 RELEASE ERSTELLEN
+───────────────────────────────────────────────────────────────
+cd "c:\Users\Marcel Weidenauer\Documents\GitHub\Projekt2025\XVLauncher-main\Game"
+
+# Graphics verschlüsseln (wenn geändert)
+ruby create_graphics_pack.rb
+
+# Release-Ordner erstellen
+ruby create_release.rb
+
+# Git committen
+cd ..
+git add Game/*
+git commit -m "Release v1.0.0"
+git push origin main
+
+# GitHub Release erstellen:
+→ Gehe zu GitHub Repository
+→ Releases → Create new release
+→ Tag: v1.0.0
+→ Publish release
+
+═══════════════════════════════════════════════════════════════
+
+🏗️ LAUNCHER BAUEN
+───────────────────────────────────────────────────────────────
+# Visual Studio:
+Tools → NuGet Package Manager → Package Manager Console
+Update-Package -reinstall
+Build → Build Solution (F6)
+
+# Oder mit Batch:
+cd "c:\Users\Marcel Weidenauer\Documents\GitHub\Projekt2025\XVLauncher-main"
+.\test_launcher.bat
+
+═══════════════════════════════════════════════════════════════
+
+🚀 WORKFLOW: NEUES UPDATE
+───────────────────────────────────────────────────────────────
+1. Änderungen in Game/ machen
+2. ruby create_graphics_pack.rb (wenn Grafiken geändert)
+3. ruby create_release.rb
+4. git add Game/*
+5. git commit -m "Update v1.0.1 - Was ist neu"
+6. git push origin main
+7. GitHub Release erstellen (v1.0.1)
+
+User startet Launcher → Auto-Update! ✅
+
+═══════════════════════════════════════════════════════════════
+
+🎯 WICHTIGE DATEIEN
+───────────────────────────────────────────────────────────────
+XVLauncher-main/
+├── Properties/
+│   ├── Resources.resx         ← AccessToken, UpdateUrl
+│   └── Settings.settings      ← ProjectID (USERNAME/REPO)
+├── UpdateHandler.cs           ← GitHub API Code
+├── MainWindow.xaml.cs         ← Launcher Logik
+├── Game/
+│   ├── Graphics.pack          ← Verschlüsselt (184 MB)
+│   ├── Game.exe               ← Launcher/Decryptor
+│   ├── PokemonGame.exe        ← Eigentliches Spiel
+│   └── create_graphics_pack.rb
+└── GITHUB_SETUP.md            ← Vollständige Anleitung
+
+═══════════════════════════════════════════════════════════════
+
+🐛 TROUBLESHOOTING
+───────────────────────────────────────────────────────────────
+Problem: "401 Unauthorized"
+→ Token in Resources.resx prüfen
+
+Problem: "404 Not Found"  
+→ ProjectID in Settings.settings: USERNAME/REPONAME
+
+Problem: "Could not find release"
+→ Mindestens 1 GitHub Release erstellen
+
+Problem: Launcher zeigt "DOWNLOAD" statt "SPIELEN"
+→ GameDirectory = "Game" in Settings.settings
+
+Problem: Keine Graphics im Spiel
+→ Game.exe muss der Launcher sein (106 KB)
+
+═══════════════════════════════════════════════════════════════
+
+✨ GITHUB API UNTERSCHIEDE
+───────────────────────────────────────────────────────────────
+GitLab (alt)              →  GitHub (neu)
+─────────────────────────────────────────────────────────────
+ProjectID: 23982414      →  USERNAME/REPONAME
+Token: glpat-...         →  ghp_...
+gitlab.com/api/v4/...    →  api.github.com/...
+Private-Token header     →  Authorization: Bearer
+releases[0]              →  releases/latest
+commit.id                →  target_commitish
+
+═══════════════════════════════════════════════════════════════
+
+📝 BEISPIEL-KONFIGURATION
+───────────────────────────────────────────────────────────────
+Resources.resx:
+  <data name="AccessToken">
+    <value>ghp_IhrTokenHier123456789</value>
+  </data>
+  <data name="UpdateUrl">
+    <value>https://raw.githubusercontent.com/99Problemsx/Projekt2025/{0}/</value>
+  </data>
+
+Settings.settings:
+  <Setting Name="ProjectID">
+    <Value>99Problemsx/Projekt2025</Value>
+  </Setting>
+
+═══════════════════════════════════════════════════════════════
+
+🎮 USER EXPERIENCE
+───────────────────────────────────────────────────────────────
+Erste Installation:
+1. User lädt XVLauncher.exe
+2. Startet Launcher
+3. Launcher lädt alle Dateien von GitHub (ca. 300 MB)
+4. Klick auf "SPIELEN"
+5. Game.exe entschlüsselt Graphics.pack (10-15 Sek)
+6. PokemonGame.exe startet
+
+Update:
+1. User startet Launcher
+2. Launcher erkennt neue Version
+3. Button zeigt "UPDATE"
+4. Nur geänderte Dateien werden geladen
+5. Fertig! ✅
+
+═══════════════════════════════════════════════════════════════
+
+📊 DATEIGRÖSSEN
+───────────────────────────────────────────────────────────────
+Graphics.pack:       184 MB  (verschlüsselt)
+Audio Ordner:         94 MB  (unverschlüsselt)
+Data Ordner:          27 MB  (Scripts, Maps)
+Fonts Ordner:        0.4 MB
+Game.exe:           0.1 MB  (Launcher)
+PokemonGame.exe:      4 MB  (RGSS Player)
+─────────────────────────────────────────────────────────────
+TOTAL Release:      ~310 MB
+
+═══════════════════════════════════════════════════════════════
